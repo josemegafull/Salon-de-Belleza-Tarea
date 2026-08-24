@@ -5,6 +5,36 @@
     <artifactId>Salon</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
+    <repositories>
+        <repository>
+            <id>unknown-jars-temp-repo</id>
+            <name>A temporary repository created by NetBeans for libraries and jars it could not identify. Please replace the dependencies in this repository with correct ones and delete this repository.</name>
+            <url>file:${project.basedir}/lib</url>
+        </repository>
+    </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>IGU.animacion.library</groupId>
+            <artifactId>IGU.Animacion</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>IGU.Animacion.complemeto</groupId>
+            <artifactId>IGU.AnimacionC.library</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.geniot</groupId>
+            <artifactId>jortho</artifactId>
+            <version>1.1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>BD.ucanaccess</groupId>
+            <artifactId>BD.ucanaccess.library</artifactId>
+            <version>5.0.1</version>
+        </dependency>
+    </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>26</maven.compiler.release>

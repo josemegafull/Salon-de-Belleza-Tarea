@@ -4,13 +4,20 @@
 
 package com.tarea2026.salon;
 
+import com.tarea2026.formulario.Central;
+import com.tarea2026.logica.Conexion;
+import java.sql.Connection;
+
 /**
  *
- * @author PC TECHNOLOGY
+ * @author JoseCambisaca
  */
 public class Salon {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        java.awt.EventQueue.invokeLater(() -> {
+              Conexion CN =new Conexion();Connection con= CN.getConectar();
+              if(con != null){ new Central().setVisible(true);}//------->Cierre
+        });
     }
 }
