@@ -19,8 +19,8 @@ public class Central extends javax.swing.JFrame {
    Reconexion panel2 = new Reconexion();
    Clientes panel3 = new Clientes();
    Servicios panel4 = new Servicios();
-   /*RECETAS panel7 = new RECETAS();
-   REPORTES panel6 = new REPORTES();*/
+   Citas panel5 = new Citas();
+   /*REPORTES panel6 = new REPORTES();*/
    //INVENTARIO panel3;   
    String vl1, seleccion;  int var1,var2,evl;  JPanel pl;
     /**
@@ -310,7 +310,7 @@ public class Central extends javax.swing.JFrame {
             resp=panel4.cancelarxsalida();
         break;
         case"panel5":
-            //resp=panel5.Cancelarxsalida();
+            resp=panel5.cancelarxsalida();
         break;
         case"panel6":
             //resp=panel6.cancelarxsalida();
@@ -343,7 +343,7 @@ public class Central extends javax.swing.JFrame {
         break;
         case"panel5":
            //if(envt.equalsIgnoreCase("click")){panel5.MenuLateralclick();}
-    
+            if(envt.equalsIgnoreCase("click")){panel5.MenuLateralclick();}
         break;
         case"panel6":
           
@@ -430,6 +430,12 @@ public class Central extends javax.swing.JFrame {
 
     private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
         // TODO add your handling code here:
+        evl=jPanel1.getComponentCount();
+        if (evl>0&&continuar(seleccion)!=0){   /*JOptionPane.showMessageDialog(null,"estoy aqui")*/  return;}//---->Cierre
+        capturartamaño();
+        abrirpaneles(panel5,var2,var1);
+        seleccion = "panel5";
+        
     }//GEN-LAST:event_jMenuItem13ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed

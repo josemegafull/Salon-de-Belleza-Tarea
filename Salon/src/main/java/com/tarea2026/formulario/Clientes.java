@@ -1,6 +1,9 @@
 package com.tarea2026.formulario;
 
    
+import com.tarea2026.logica.ClienteNuevo;
+import com.tarea2026.logica.ClienteRegular;
+import com.tarea2026.logica.ClienteVIP;
 import com.tarea2026.logica.Objetos;
 import com.tarea2026.logica.MControles;
 import com.tarea2026.logica.ModeloBD;
@@ -52,6 +55,8 @@ initComponents();
         jTextField4 = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel10 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -252,6 +257,12 @@ initComponents();
 
         jTextField5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(38, 150, 209));
+        jLabel14.setText("TIPO:");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -268,18 +279,23 @@ initComponents();
                 .addGap(19, 19, 19)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1547, Short.MAX_VALUE)
-                    .addComponent(jTextField4)
                     .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jTextField5))
+                    .addComponent(jTextField5)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField5)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
@@ -296,10 +312,12 @@ initComponents();
                         .addGap(10, 10, 10)
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(10, 10, 10)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBox1))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -315,7 +333,7 @@ initComponents();
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 44, Short.MAX_VALUE))
+                .addGap(0, 14, Short.MAX_VALUE))
         );
 
         jPanel10.setBackground(new java.awt.Color(102, 255, 255));
@@ -397,7 +415,7 @@ initComponents();
                     .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 584, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
                 .addGap(15, 15, 15))
         );
 
@@ -577,7 +595,7 @@ initComponents();
 /* --------------------------------------------------------------------------------------------------------- 
      Codigo para manejo de  los datos de las cajas de texto ingreso y actualizacion de  la base de datos 
    ---------------------------------------------------------------------------------------------------------*/ 
-private void EditaroIngresar(){
+/*private void EditaroIngresar(){
 capturardatos();    ModeloBD MD = new ModeloBD();   String vl = "";
     try{
         switch(valid){
@@ -597,6 +615,68 @@ capturardatos();    ModeloBD MD = new ModeloBD();   String vl = "";
     }catch(NumberFormatException e){
           JOptionPane.showMessageDialog(null,"Error "+e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
     }
+}*/
+
+private void EditaroIngresar() {
+    capturardatos();    ModeloBD MD = new ModeloBD();   String vl = "";
+    try {
+        Cliente cliente = crearCliente();
+        switch (valid) {
+            case "nuevo":
+                OB.AGCliente(cliente);
+                if (MD.INCliente(registro[1]).length() > 0) {VC.MSimple("No se pudo guardar el registro\nError: "+ MD.INCliente(registro[1]),"Error al guardar los datos",
+                        JOptionPane.ERROR_MESSAGE);return;}
+                vl = "Registro guardado de forma exitosa";
+                break;
+            case "editar":
+                OB.EDCliente(cliente, Buscarposicion());
+                if (MD.EDCliente(registro[1]).length() > 0) {VC.MSimple("No se pudo actualizar el registro\nError: "+ MD.EDCliente(registro[1]),"Error al guardar los datos",
+                        JOptionPane.ERROR_MESSAGE);return;}
+                vl = "Registro actualizado de forma exitosa";
+                break;
+        }
+        VC.MSimple(vl,"Guardado completado",JOptionPane.INFORMATION_MESSAGE);
+        ConfiguracionDInicio();
+        seleccion = -1;
+        pos = -1;
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null,"Error " + e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+private Cliente crearCliente() {
+
+    return switch (registro[5]) {
+
+        case "Nuevo" -> new ClienteNuevo(
+                registro[0],
+                registro[1],
+                registro[2],
+                registro[3],
+                registro[4]
+        );
+
+        case "Regular" -> new ClienteRegular(
+                registro[0],
+                registro[1],
+                registro[2],
+                registro[3],
+                registro[4]
+        );
+
+        case "VIP" -> new ClienteVIP(
+                registro[0],
+                registro[1],
+                registro[2],
+                registro[3],
+                registro[4]
+        );
+
+        default -> throw new IllegalArgumentException(
+                "Tipo de cliente no válido"
+        );
+    };
 }
     private void capturardatos (){//recoger datos de los text
         registro = null;    registro = new String[10];
@@ -604,15 +684,17 @@ capturardatos();    ModeloBD MD = new ModeloBD();   String vl = "";
         registro[2]= jTextField2.getText();
         registro[3]= jTextField3.getText();
         registro[4]= jTextField4.getText();
+        registro[5]= jComboBox1.getSelectedItem().toString();
         registro[0]= jTextField5.getText();
       }
 
     private void cargardatosentext (){
         for (int i = 0; i < Objetos.CLI.size(); i++) {
             Cliente em= Objetos.CLI.get(i);
-           if(String.valueOf(jTable1.getValueAt(pos,0)).equals(em.getCedula())){
+            //JOptionPane.showMessageDialog(null, jTable1.getValueAt(pos,0));
+           if(String.valueOf(jTable1.getValueAt(pos,1)).equals(em.getCedula())){
            jTextField1.setText(em.getCedula());  jTextField2.setText(em.getNombre());    jTextField3.setText(em.getTelefono());
-           jTextField4.setText(em.getCorreo());  jTextField5.setText(em.getIdcliente());
+           jTextField4.setText(em.getCorreo());  jTextField5.setText(em.getIdcliente()); jComboBox1.setSelectedItem(em.getTipo());
         } 
     }  
   }        
@@ -677,6 +759,7 @@ private void ConfiguracionDInicio(){
     VC.mamejocombos(jPanel5,"bloquear");               
             buttonGroup1.clearSelection();
    jTextField9.setEditable(true);        jTextField5.setEditable(false);
+   jComboBox1.setModel(OB.TipoCliente()); 
     mostrarbotonesBase();      seleccion=-1;   pos=-1; 
 } 
 private String cargarobjetos(){
@@ -688,11 +771,13 @@ return a;
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;

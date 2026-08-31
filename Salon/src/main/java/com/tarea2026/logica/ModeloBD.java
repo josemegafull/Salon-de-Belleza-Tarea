@@ -126,15 +126,23 @@ return operacion;
                    Codigo para cargar los empleados cliente
   ------------------------------------------------------------------------------*/     
 public String CARGARCLIENTES (){
-String resp="";  String Rcliente []=new String[9];
+String resp="";  String Rcliente []=new String[8];
 try {
    conl=conectar.getConectar();     SQL =" Select * From CLIENTES";
    sent = conl.createStatement();   rst =sent.executeQuery(SQL);
     while (rst.next()){
-        Rcliente[0]=rst.getString("Idcliente");
-        Rcliente[1]=rst.getString("Cedula");   Rcliente[2]=rst.getString("Nombres");
-        Rcliente[3]=rst.getString("Telefono"); Rcliente[4]=rst.getString("Correo");
-        IN.AGCliente(new Cliente(Rcliente[0],Rcliente[1], Rcliente[2], Rcliente[3],Rcliente[4]));
+        Rcliente[0]=rst.getString("Idcliente"); Rcliente[1]=rst.getString("Cedula");   
+        Rcliente[2]=rst.getString("Nombres");   Rcliente[3]=rst.getString("Telefono"); 
+        Rcliente[4]=rst.getString("Correo");    Rcliente[5]=rst.getString("Tipo");
+        switch (Rcliente[5]) {
+
+                case "Nuevo" -> IN.AGCliente(new ClienteNuevo(Rcliente[0],Rcliente[1],Rcliente[2],Rcliente[3],Rcliente[4]));
+
+                case "Regular" -> IN.AGCliente(new ClienteRegular(
+                            Rcliente[0],Rcliente[1],Rcliente[2],Rcliente[3],Rcliente[4]));
+
+                case "VIP" -> IN.AGCliente(new ClienteVIP(Rcliente[0],Rcliente[1],Rcliente[2],Rcliente[3],Rcliente[4]));
+            }      
     }
 }catch (NumberFormatException | SQLException e ){
     resp=e.getMessage();
@@ -150,16 +158,18 @@ int n;  String operacion="";
 String[] registro = new String[10];
 try {
     conl= conectar.getConectar();   sent = conl.createStatement();
-    SQL = " INSERT INTO CLIENTES(IdCliente,Cedula,Nombres,Telefono,Correo,Especialidad)VALUES(?,?,?,?,?,?)";
+    SQL = " INSERT INTO CLIENTES(IdCliente,Cedula,Nombres,Telefono,Correo,Tipo)VALUES(?,?,?,?,?,?)";
     sta= conl.prepareCall(SQL);
         for (int i = 0; i < Objetos.CLI.size(); i++) {
             Cliente remp = Objetos.CLI.get(i);
             if(remp.getCedula().equals(bus)){
                 registro[0] = remp.getIdcliente();
                 registro[1] = remp.getCedula(); registro[2] = remp.getNombre();
-                registro[3] = remp.getTelefono();  registro[4] = remp.getCorreo(); 
+                registro[3] = remp.getTelefono();  registro[4] = remp.getCorreo();
+                registro[5] = remp.getTipo();
                 sta.setString(1,registro[0]);sta.setString(2,registro[1]);
                 sta.setString(3, registro[2]);sta.setString(4,registro[3]);  sta.setString(5,registro[4]);
+                sta.setString(6,registro[5]);
                 n = sta.executeUpdate();
                  if(n>0){operacion = "";}
               }
@@ -177,7 +187,7 @@ int n;  String operacion="";
 String[] registro = new String[10];
 try {
     conl= conectar.getConectar();   sent = conl.createStatement();
-    SQL = " update CLIENTES set IdClientes = ?,Nombres = ?,Telefono = ?,Correo = ?,Especialidad = ? where cedula = ?";
+    SQL = " update CLIENTES set IdClientes = ?,Nombres = ?,Telefono = ?,Correo = ?,Tipo = ? where cedula = ?";
     sta= conl.prepareCall(SQL);
         for (int i = 0; i < Objetos.CLI.size(); i++) {
             Cliente remp = Objetos.CLI.get(i);
@@ -185,9 +195,9 @@ try {
                 registro[0] = remp.getIdcliente();
                 registro[1] = remp.getCedula(); registro[2] = remp.getNombre();
                 registro[3] = remp.getTelefono(); registro[4] = remp.getCorreo(); 
-                
+                registro[5] = remp.getTipo();
                 sta.setString(1,registro[0]);   sta.setString(2,registro[2]);   sta.setString(3,registro[3]);   
-                sta.setString(4,registro[4]);   sta.setString(5,registro[1]);
+                sta.setString(4,registro[4]);   sta.setString(5,registro[1]);   sta.setString(6,registro[5]);
                 n = sta.executeUpdate();
                 if(n>0){operacion ="";}
             }
