@@ -538,10 +538,10 @@ initComponents();
     private Integer Buscarposicion (){
     int vl=-1;
     for (int i = 0; i < Objetos.CLI.size(); i++) {
-        Cliente emp = Objetos.CLI.get(i);        
-        if(String.valueOf(jTable1.getValueAt(pos,0)).equals(emp.getCedula())){ 
-            vl=i;
-        }//------->Cierre
+        Cliente emp = Objetos.CLI.get(i);
+            if(String.valueOf(jTable1.getValueAt(pos,1)).equals(emp.getCedula())){ 
+                vl=i;
+            }//------->Cierre
         }
     return vl;
     }
@@ -629,6 +629,7 @@ private void EditaroIngresar() {
                 vl = "Registro guardado de forma exitosa";
                 break;
             case "editar":
+                
                 OB.EDCliente(cliente, Buscarposicion());
                 if (MD.EDCliente(registro[1]).length() > 0) {VC.MSimple("No se pudo actualizar el registro\nError: "+ MD.EDCliente(registro[1]),"Error al guardar los datos",
                         JOptionPane.ERROR_MESSAGE);return;}
@@ -656,7 +657,7 @@ private Cliente crearCliente() {
                 registro[3],
                 registro[4]
         );
-
+            
         case "Regular" -> new ClienteRegular(
                 registro[0],
                 registro[1],

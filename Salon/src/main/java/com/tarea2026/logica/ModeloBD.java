@@ -187,7 +187,7 @@ int n;  String operacion="";
 String[] registro = new String[10];
 try {
     conl= conectar.getConectar();   sent = conl.createStatement();
-    SQL = " update CLIENTES set IdClientes = ?,Nombres = ?,Telefono = ?,Correo = ?,Tipo = ? where cedula = ?";
+    SQL = " update CLIENTES set IdCliente = ?,Nombres = ?,Telefono = ?,Correo = ?,Tipo = ? where cedula = ?";
     sta= conl.prepareCall(SQL);
         for (int i = 0; i < Objetos.CLI.size(); i++) {
             Cliente remp = Objetos.CLI.get(i);
@@ -196,8 +196,10 @@ try {
                 registro[1] = remp.getCedula(); registro[2] = remp.getNombre();
                 registro[3] = remp.getTelefono(); registro[4] = remp.getCorreo(); 
                 registro[5] = remp.getTipo();
+                
+                //JOptionPane.showMessageDialog(null,remp.getCedula()+" "+bus+" "+registro[0]+registro[1]+registro[2]+registro[3]+registro[4]+registro[5]);
                 sta.setString(1,registro[0]);   sta.setString(2,registro[2]);   sta.setString(3,registro[3]);   
-                sta.setString(4,registro[4]);   sta.setString(5,registro[1]);   sta.setString(6,registro[5]);
+                sta.setString(4,registro[4]);   sta.setString(5,registro[5]);   sta.setString(6,registro[1]);
                 n = sta.executeUpdate();
                 if(n>0){operacion ="";}
             }
