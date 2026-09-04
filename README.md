@@ -36,3 +36,5 @@
 #   	Consultar los datos de un cliente. 
 #   	Consultar los datos de un profesional.
 
+
+ #   NOTA: C:\repositorio-remoto\Salon-de-Belleza-Tarea\Salon\src en esta ruta hay un archivo que se encarga de la conexión de la base de datos, la aplicación va a requerir que se modifique este archivo, CN.txt, debe abrir el archivo y actualizar la ruta de la base de datos en donde se encuentre descargado la aplicación “C:\repositorio-remoto\Salon-de-Belleza-Tarea\Salon\DATA1.accdb” “vacio	vacio vacio “ si tiene particiones el disco puede cambiar de letra lo que ocasiona que no se habrá el programa y le saldrá un mensaje que debe corregir el enlace. La base de datos contiene los registros y es muy importante.
