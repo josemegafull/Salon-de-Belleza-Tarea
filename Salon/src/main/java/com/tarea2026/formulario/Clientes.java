@@ -240,6 +240,11 @@ initComponents();
         });
 
         jTextField3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jTextField3.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField3KeyTyped(evt);
+            }
+        });
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(38, 150, 209));
@@ -256,6 +261,11 @@ initComponents();
         jLabel15.setText("ID CLIENTE:");
 
         jTextField5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jTextField5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField5KeyTyped(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(38, 150, 209));
@@ -463,9 +473,18 @@ initComponents();
     }//GEN-LAST:event_jLabel8MouseClicked
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
-     /*if (cedula().length()>0){  VC.MSimple(cedula()+"\n Revise los datos ingresados o "
-      + "Actualice el registro correcto", " Duplicado de Datos !!!", JOptionPane.ERROR_MESSAGE);return;}//---->Cierre  */ 
-    EditaroIngresar();      
+     if(!"editar".equals(valid)){
+      if (cedula().length()>0){  VC.MSimple(cedula()+"\n Revise los datos ingresados o "
+      + "Actualice el registro correcto", " Duplicado de Datos !!!", JOptionPane.ERROR_MESSAGE);return;}//---->Cierre
+     }
+      if (VC.evaluarcajasvacias(jPanel5).length()>0){
+         VC.MSimple("Debe completar toda la informacion requerida"
+      + "para poder guardar los datos", " Campos requeridos !!!", JOptionPane.ERROR_MESSAGE); return;}//---->Cierre
+     if(jComboBox1.getSelectedItem().toString().equalsIgnoreCase("<<seleccione>>")){
+      VC.MSimple("Debe completar toda la informacion requerida"
+      + "para poder guardar los datos", " Campos requeridos !!!", JOptionPane.ERROR_MESSAGE); return;} 
+     
+     EditaroIngresar();      
     }//GEN-LAST:event_jLabel9MouseClicked
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
@@ -519,7 +538,7 @@ initComponents();
     }//GEN-LAST:event_jTextField2KeyTyped
 
     private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
-         VC.numeros(evt);
+         VC.numerocedula(evt, jTextField1); 
     }//GEN-LAST:event_jTextField1KeyTyped
 
     private void formAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_formAncestorAdded
@@ -563,6 +582,15 @@ initComponents();
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    private void jTextField5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField5KeyTyped
+        // TODO add your handling code here:
+         VC.numeros(evt);
+    }//GEN-LAST:event_jTextField5KeyTyped
+
+    private void jTextField3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField3KeyTyped
+        VC.numerocedula(evt, jTextField3); 
+    }//GEN-LAST:event_jTextField3KeyTyped
+
     private void filtro(){
         tr=new TableRowSorter<>(OB.MostrartablaClientes(jTable1));
         jTable1.setRowSorter(tr);
@@ -595,46 +623,24 @@ initComponents();
 /* --------------------------------------------------------------------------------------------------------- 
      Codigo para manejo de  los datos de las cajas de texto ingreso y actualizacion de  la base de datos 
    ---------------------------------------------------------------------------------------------------------*/ 
-/*private void EditaroIngresar(){
-capturardatos();    ModeloBD MD = new ModeloBD();   String vl = "";
-    try{
-        switch(valid){
-            case"nuevo":
-                OB.AGCliente(new Cliente(registro[0],registro[1],registro[2],registro[3],registro[4]));
-                if (MD.INCliente(registro[1]).length()>0){ VC.MSimple("No se pudo guardar el registro \n Error: "+MD.INempleado(registro[1]),"Error al guardar los datos",JOptionPane.ERROR_MESSAGE);return;}//----->Cierre
-                vl=" Registro guardado de forma exitosa";  // jTable1.setVisible(true);   jScrollPane1.setVisible(true);    
-            break;
-            case"editar":
-                OB.EDCliente(new Cliente(registro[0],registro[1],registro[2],registro[3],registro[4]),Buscarposicion());
-                if (MD.EDCliente(registro[1]).length()>0){VC.MSimple("No se pudo actualizar el registro \n Error: "+MD.INempleado(registro[1]),"Error al guardar los datos",JOptionPane.ERROR_MESSAGE);return;}//---->Cierre
-                vl=" Registro actualizado de forma exitosa";
-            break;
-        } 
-       VC.MSimple(vl," Guardado completado", JOptionPane.INFORMATION_MESSAGE);
-       ConfiguracionDInicio();  seleccion=-1;    pos=-1;
-    }catch(NumberFormatException e){
-          JOptionPane.showMessageDialog(null,"Error "+e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
-    }
-}*/
 
 private void EditaroIngresar() {
     capturardatos();    ModeloBD MD = new ModeloBD();   String vl = "";
     try {
         Cliente cliente = crearCliente();
         switch (valid) {
-            case "nuevo":
+            case "nuevo" -> {
                 OB.AGCliente(cliente);
                 if (MD.INCliente(registro[1]).length() > 0) {VC.MSimple("No se pudo guardar el registro\nError: "+ MD.INCliente(registro[1]),"Error al guardar los datos",
                         JOptionPane.ERROR_MESSAGE);return;}
                 vl = "Registro guardado de forma exitosa";
-                break;
-            case "editar":
-                
+            }
+            case "editar" -> {
                 OB.EDCliente(cliente, Buscarposicion());
                 if (MD.EDCliente(registro[1]).length() > 0) {VC.MSimple("No se pudo actualizar el registro\nError: "+ MD.EDCliente(registro[1]),"Error al guardar los datos",
                         JOptionPane.ERROR_MESSAGE);return;}
                 vl = "Registro actualizado de forma exitosa";
-                break;
+            }
         }
         VC.MSimple(vl,"Guardado completado",JOptionPane.INFORMATION_MESSAGE);
         ConfiguracionDInicio();
@@ -708,13 +714,13 @@ private String cedula(){
     for (int i = 0; i < Objetos.CLI.size(); i++) {
             Cliente emp = Objetos.CLI.get(i);
         switch (valid){
-         case "editar":
-            if(emp.getCedula().equalsIgnoreCase(jTextField1.getText())){
-                resp="Ya existe un registro con la cedula ingresada, la cedula es un campo unico!!!"; return resp;}//------>Cierre 
-           break;
-         case "nuevo":
-            if(emp.getCedula().equalsIgnoreCase(jTextField1.getText())){resp="Ya existe un registro con la cedula ingresada";return resp;}//---Cierre 
-            break;      
+         case "editar" -> {
+             if(emp.getCedula().equalsIgnoreCase(jTextField1.getText())){
+                 resp="Ya existe un registro con la cedula ingresada, la cedula es un campo unico!!!"; return resp;}//------>Cierre 
+         }
+         case "nuevo" -> {
+             if(emp.getCedula().equalsIgnoreCase(jTextField1.getText())){resp="Ya existe un registro con la cedula ingresada";return resp;}//---Cierre 
+         }      
         }
     }
  return resp;
@@ -748,18 +754,17 @@ private void ActivarNuevo(){
     valid="nuevo";
     VC.manejocajas(jPanel5, "limpiar");     VC.manejolabelsbotones(jPanel2,"ocultar");  VC.manejocajas(jPanel5,"editar");
     VC.mamejocombos(jPanel5,"desbloquear"); jTextField1.requestFocus();
-    mostrarbotonesBase1();                  jPanel10.setVisible(false);
-    jTable1.setVisible(false);             jScrollPane1.setVisible(false);
-        
+    mostrarbotonesBase1();                  jPanel10.setVisible(false);       
 }
 private void ConfiguracionDInicio(){
     if(cargarobjetos().length()>0){VC.MSimple(cargarobjetos(),"Error!!!",JOptionPane.ERROR_MESSAGE);return;}//----->Cierre
     valid=""; jTable1.setVisible(true);    jTable1.setModel(OB.MostrartablaClientes(jTable1));   VC.tamañocolumnas(jTable1,"empleados");
     VC.manejolabelsbotones(jPanel2,"ocultar");   VC.tamañocolumnas(jTable1, "empleados");     VC.manejocajas(jPanel5,"noeditar");             
-         VC.manejocajas(jPanel5, "limpiar");                     
-    VC.mamejocombos(jPanel5,"bloquear");               
+    VC.manejocajas(jPanel5, "limpiar");                     
+    VC.mamejocombos(jPanel5,"bloquear");
+    jPanel10.setVisible(true);
             buttonGroup1.clearSelection();
-   jTextField9.setEditable(true);        jTextField5.setEditable(false);
+   jTextField9.setEditable(true);        
    jComboBox1.setModel(OB.TipoCliente()); 
     mostrarbotonesBase();      seleccion=-1;   pos=-1; 
 } 
