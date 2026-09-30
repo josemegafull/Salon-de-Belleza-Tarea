@@ -19,7 +19,9 @@ public class Central extends javax.swing.JFrame {
    Reconexion panel2 = new Reconexion();
    Clientes panel3 = new Clientes();
    Servicios panel4 = new Servicios();
-   Citas panel5 = new Citas();
+   Cita panel5 = new Cita();
+   RevisionCitas panel6 = new RevisionCitas();
+
    /*REPORTES panel6 = new REPORTES();*/
    //INVENTARIO panel3;   
    String vl1, seleccion;  int var1,var2,evl;  JPanel pl;
@@ -272,11 +274,12 @@ public class Central extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         evl=jPanel1.getComponentCount();
         if (evl>0&&continuar(seleccion)!=0){
+     
             return;
         }
         capturartamaño();
-        //abrirpaneles(panel5,var2,var1);
-        seleccion = "panel5";
+        abrirpaneles(panel6,var2,var1);
+        seleccion = "panel6";
     }//GEN-LAST:event_jMenuItem4ActionPerformed
       private void abrirpaneles(JPanel p,int b,int a){
         p.setSize(b, a);
@@ -313,7 +316,7 @@ public class Central extends javax.swing.JFrame {
             resp=panel5.cancelarxsalida();
         break;
         case"panel6":
-            //resp=panel6.cancelarxsalida();
+            resp=panel6.cancelarxsalida();
         break;
         case"panel7":
             //resp=panel7.Cancelarxsalida();
@@ -346,7 +349,7 @@ public class Central extends javax.swing.JFrame {
             if(envt.equalsIgnoreCase("click")){panel5.MenuLateralclick();}
         break;
         case"panel6":
-          
+            if(envt.equalsIgnoreCase("click")){panel6.MenuLateralclick();}
         break;
           case"panel7":
           //if(envt.equalsIgnoreCase("click")){panel7.MenuLateralclick();}

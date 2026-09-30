@@ -17,10 +17,10 @@ public class Citas {
 
     private Cliente cliente;
     private Profesional profesional;
-    private Servicio servicio;
+    //private Servicio servicio;
 
     public Citas(String codigo, String fecha, String hora, String estado,
-                Cliente cliente, Profesional profesional, Servicio servicio) {
+                Cliente cliente, Profesional profesional) {
 
         this.codigo = codigo;
         this.fecha = fecha;
@@ -28,7 +28,7 @@ public class Citas {
         this.estado = estado;
         this.cliente = cliente;
         this.profesional = profesional;
-        this.servicio = servicio;
+    
     }
 
     public String getCodigo() {
@@ -78,12 +78,4 @@ public class Citas {
     public void setProfesional(Profesional profesional) {
         this.profesional = profesional;
     }
-
-    public Servicio getServicio() {
-        return servicio;
-    }
-
-    public void setServicio(Servicio servicio) {
-        this.servicio = servicio;
-    }
-}
+   } 

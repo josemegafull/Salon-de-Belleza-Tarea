@@ -10,6 +10,7 @@
 package com.tarea2026.repository;
 
 import com.tarea2026.modelos.Citas;
+import java.util.List;
 
 
 public class CitaRepositoryImpl implements CitaRepository {
@@ -43,5 +44,10 @@ public class CitaRepositoryImpl implements CitaRepository {
     @Override
     public boolean estaVacia() {
         return cola.estaVacia();
+    }
+    
+    @Override
+    public List<Citas> listar() {
+        return cola.listar();
     }
 }

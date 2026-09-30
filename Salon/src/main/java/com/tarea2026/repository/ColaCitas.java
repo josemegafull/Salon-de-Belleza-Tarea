@@ -9,6 +9,8 @@ package com.tarea2026.repository;
  */
 
 import com.tarea2026.modelos.Citas;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ColaCitas {
 
@@ -57,6 +59,21 @@ public class ColaCitas {
 
         return cita;
     }
+    
+    public List<Citas> listar() {
+
+    List<Citas> lista = new ArrayList<>();
+
+    Nodo actual = frente;
+
+    while (actual != null) {
+        lista.add(actual.cita);
+        actual = actual.siguiente;
+    }
+
+    return lista;
+}
+    
 
     // Consultar la primera cita sin eliminarla
     public Citas siguiente() {

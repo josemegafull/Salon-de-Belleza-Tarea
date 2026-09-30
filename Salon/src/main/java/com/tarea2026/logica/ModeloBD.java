@@ -1,6 +1,10 @@
 package com.tarea2026.logica;
 
+import static com.tarea2026.logica.Objetos.CLI;
+import static com.tarea2026.logica.Objetos.PRO;
+import com.tarea2026.modelos.Citas;
 import com.tarea2026.modelos.Cliente;
+import com.tarea2026.modelos.Despachos;
 import com.tarea2026.modelos.Enlaces;
 import com.tarea2026.modelos.Profesional;
 import com.tarea2026.modelos.Servicio;
@@ -41,6 +45,8 @@ try {
 }
 return resp;
 }
+
+
 
 /*-------------------------------------------------------------------------------------------  
                             Guardar el registro de un nuevo empleado
@@ -340,7 +346,55 @@ try {
 return operacion;
 }
 
+/*------------------------------------------------------------------------------  
+                   Codigo para cargar las Citas
+  ------------------------------------------------------------------------------*/     
+public String CARGARCITAS (){
+String resp="";  String RServicios []=new String[9];
+try {
+   conl=conectar.getConectar();     SQL =" Select * From CITAS";
+   sent = conl.createStatement();   rst =sent.executeQuery(SQL);
+    while (rst.next()){
+        RServicios[0]=rst.getString("Id");
+        RServicios[1]=rst.getString("Cliente");   RServicios[2]=rst.getString("Profesional");
+        RServicios[3]=rst.getString("Fecha"); RServicios[4]=rst.getString("Hora");
+        RServicios[5]=rst.getString("Estado");
+        Cliente cliente = buscarCliente(RServicios[1]);
+        Profesional profesional = buscarProfesional(RServicios[2]);
+        String dvfe[] = RServicios[3].split(" ");
+        String nuv=dvfe[0].replaceAll("-","/");
+        IN.AGCita(new Citas(RServicios[0],nuv, RServicios[4], RServicios[5], cliente, profesional));        
+    }
+}catch (NumberFormatException | SQLException e ){
+    resp=e.getMessage();
+}
+return resp;
+}
 
+
+private Cliente buscarCliente(String nombre) {
+
+    for (Cliente c : CLI) {
+
+        if (c.getNombre().equalsIgnoreCase(nombre)) {
+            return c;
+        }
+    }
+
+    return null;
+}
+
+private Profesional buscarProfesional(String nombre) {
+
+    for (Profesional p : PRO) {
+
+        if (p.getNombre().equalsIgnoreCase(nombre)) {
+            return p;
+        }
+    }
+
+    return null;
+}
 
 private java.sql.Date TranformaciondeFechas (String Vfecha){
   Date fecha;  java.sql.Date Nvfecha = null;
@@ -356,6 +410,66 @@ return Nvfecha;
 }
 
 
+/*------------------------------------------------------------------------------  
+              Codigo para guardar datos generales de la cita
+  ------------------------------------------------------------------------------*/ 
+public String GDDatosGeneralesCita(String dt1, String dt2){
+int n;  String operacion="";
+String[] registro = new String[6];
+try {
+conl= conectar.getConectar();
+sent = conl.createStatement();   
+SQL = " INSERT INTO CITAS(Id,Cliente,Profesional,Fecha,Hora,Estado)VALUES(?,?,?,?,?,?)";    
+sta = conl.prepareCall(SQL);   
+ for (int i = 0; i < Objetos.CITA.size(); i++) {
+    Citas remp = Objetos.CITA.get(i);
+    if(remp.getCodigo().equalsIgnoreCase(dt1) && remp.getFecha().equals(dt2)){
+        registro[0] = remp.getCodigo();   registro[1] = remp.getCliente().getNombre();      registro[2] = remp.getProfesional().getNombre();
+        registro[3] = remp.getFecha();    registro[4] = remp.getHora();    registro[5] = remp.getEstado();
+        String Fe = registro[3];
+        JOptionPane.showMessageDialog(null,Fe);
+        sta.setString(1,registro[0]);
+        sta.setString(2,registro[1]);
+        sta.setString(3,registro[2]);
+        sta.setDate(4, TranformaciondeFechas(Fe));
+        sta.setString(5,registro[4]);
+        sta.setString(6,registro[5]);
+      
+        n = sta.executeUpdate();
+        if(n>0){    operacion = "";}    }
+    }  
+} catch (NumberFormatException | SQLException e) {
+    operacion=e.getMessage();
+}              
+return operacion;
+}
+/*-------------------------------------------------------------------------------------------  
+             Guardar los servicios agendados en las citas en la base de datos
+---------------------------------------------------------------------------------------------*/     
+public String GDDetalleServiciosEgresados(String vl){
+int n =0;  String operacion="";
+String[] registro = new String[7];
+try {
+   conl= conectar.getConectar();    sent = conl.createStatement();
+   SQL = " INSERT INTO DESPACHOS(Cita,Fecha,Codigo,Nombre,Descripcion,Precio)VALUES(?,?,?,?,?,?)";
+   sta= conl.prepareCall(SQL);
+   for(int i=0;i< Objetos.DTCMP.size();i++){
+       Despachos remp = Objetos.DTCMP.get(i);
+        if(!vl.equalsIgnoreCase(remp.getScodigo())){   registro[0] =vl+"";}
+        else{   registro[0] = remp.getScodigo(); }
+        registro[1] = remp.getFecha();          registro[2] = remp.getCodigo();
+        registro[3] = remp.getDetalle();        registro[4] = remp.getDisponibilidad();  registro[5] = remp.getPrecio()+"";
+        String Fe = registro[1];
+        sta.setString(1, registro[0]);        sta.setDate(2, TranformaciondeFechas(Fe));
+        sta.setString(3, registro[2]);       sta.setString(4,(registro[3]));        sta.setString(5, registro[4]);
+        sta.setDouble(6,Double.parseDouble(registro[5]));
+        n = sta.executeUpdate();}
+        if(n>0){    operacion = "";}
+} catch (NumberFormatException | SQLException e) {
+    operacion=e.getMessage();
+}      
+ return operacion;
+}
 public String CREARTABLA (String nomb){
 String respuesta = ""; int n ;
 String b[]=nomb.split(" ");

@@ -39,7 +39,9 @@ public abstract class Cliente extends Persona {
     public void setIdcliente(String idcliente) {
         this.idcliente = idcliente;
     }
-
+    public String toString() {
+        return getNombre();
+    }
     public abstract double calcularDescuento(double precio);
     public abstract String getTipo();
 }

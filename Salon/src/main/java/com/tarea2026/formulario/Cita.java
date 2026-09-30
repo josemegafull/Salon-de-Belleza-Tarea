@@ -13,6 +13,7 @@ import java.awt.event.ComponentAdapter;
 import com.tarea2026.logica.ModeloBD;
 import com.tarea2026.logica.Objetos;
 import com.tarea2026.logica.SLIDE;
+import com.tarea2026.modelos.Citas;
 import com.tarea2026.modelos.Cliente;
 import com.tarea2026.modelos.Despachos;
 import com.tarea2026.modelos.Profesional;
@@ -27,9 +28,10 @@ import javax.swing.JOptionPane;
 /**
  * @author Jose Cambisaca Baquerizo
  */
-public class Citas extends javax.swing.JPanel {
+public class Cita extends javax.swing.JPanel {
     Objetos OB = new Objetos();       Conexion cn = new Conexion();   
-    MControles vc= new MControles();
+    MControles vc= new MControles();  
+    Cliente cliente = null; Profesional profesional =null; 
     String fecha ="";
     int seleccion=-1,pos=-1;
     String valid="";
@@ -37,7 +39,7 @@ public class Citas extends javax.swing.JPanel {
     private Cliente clienteSeleccionado;
     
     
-    public Citas() {
+    public Cita() {
         initComponents();
 
        
@@ -599,6 +601,7 @@ public class Citas extends javax.swing.JPanel {
         });
 
         jDateChooser1.setToolTipText("");
+        jDateChooser1.setDateFormatString("dd/MM/yyyy");
         jDateChooser1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jDateChooser1.setMaxSelectableDate(new java.util.Date(253370786490000L));
         jDateChooser1.setMinSelectableDate(new java.util.Date(-62135747910000L));
@@ -917,7 +920,27 @@ public class Citas extends javax.swing.JPanel {
     }//GEN-LAST:event_jLabel10MouseClicked
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
-   
+         String cap,cap1,cap2,env; ModeloBD MD = new ModeloBD();
+         guardarcita();
+       try{
+            env=jTextField12.getText();    
+            
+            cap2=MD.GDDatosGeneralesCita(env,capturarfecha());
+            if (cap2.length()>0){
+                JOptionPane.showMessageDialog(null,"Error:\n"+ cap2+"\n No se a podido completar el egreso", "Error", JOptionPane.ERROR_MESSAGE);
+                return;    
+            }
+            cap= MD.GDDetalleServiciosEgresados(env);
+            if (cap.length()>0){
+                JOptionPane.showMessageDialog(null,"Error:\n"+ cap+"\n No se a podido completar el egreso", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            JOptionPane.showMessageDialog(null," Datos del Comprobante guardados de manera exitosa" ," Guardar", JOptionPane.INFORMATION_MESSAGE);
+            ConfiguracionDInicio();
+       }catch (NumberFormatException|HeadlessException e) {
+           JOptionPane.showMessageDialog(this, e.getMessage(),"Error", JOptionPane.ERROR_MESSAGE);
+       }  
+        
     }//GEN-LAST:event_jLabel9MouseClicked
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
@@ -1055,6 +1078,8 @@ jComboBox1.setModel(OB.CONCEPTO1(sum,""));*/
 }
 private void ConfiguracionDInicio(){
     cargarobjetos();CargarModelosCombox();
+    vc.manejocajas(jPanel3, "limpiar");
+    jTable1.setModel(OB.MostrartablaDespachos("suministro")); 
    /* //if(cargarobjetos().length()>0){VC.MSimple(cargarobjetos(),"Error!!!",JOptionPane.ERROR_MESSAGE);return;}//----->Cierre
     vc.tamañocolumnas(jTable1,"empleados");
     valid=""; jTable1.setVisible(true);    jTable1.setModel(OB.MostrartablaEmpleados(jTable1));   
@@ -1149,6 +1174,23 @@ try {
     }
     return fecha;
 } 
+private void capturardatosgenerales (){//recoger datos para el comprobante 
+        registro = null;
+        registro = new String[8];
+        registro[0]= jTextField12.getText();                    ///codigo
+        registro[1]= capturarfecha();                           //fecha
+        cliente = (Cliente) jComboBox1.getSelectedItem();
+        profesional =   (Profesional) jComboBox2.getSelectedItem();
+        //registro[2]= jComboBox1.getSelectedItem().toString();   //cliente
+        //registro[3]= jComboBox2.getSelectedItem().toString();   //Profesional
+        registro[4]= jTextField7.getText();                     //hora            
+        registro[5]= jComboBox3.getSelectedItem().toString();               //Estado
+}
+private void  guardarcita (){//guardar datos
+ capturardatosgenerales();
+ OB.AGCita(new Citas(registro[0],registro[1],registro[4],registro[5],cliente,profesional));
+}
+
 
 private void capturardatosproducto (){//recoger datos de los text
     registro = null;
@@ -1167,8 +1209,6 @@ private void capturardatosproducto (){//recoger datos de los text
     private javax.swing.JComboBox<String> jComboBox2;
     public javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox5;
-    private javax.swing.JComboBox<String> jComboBox6;
-    private javax.swing.JComboBox<String> jComboBox7;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1177,29 +1217,19 @@ private void capturardatosproducto (){//recoger datos de los text
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
-    private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
     private javax.swing.JLabel jLabel53;
-    private javax.swing.JLabel jLabel54;
-    private javax.swing.JLabel jLabel55;
-    private javax.swing.JLabel jLabel56;
-    private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
     private javax.swing.JLabel jLabel63;
-    private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel65;
-    private javax.swing.JLabel jLabel66;
-    private javax.swing.JLabel jLabel67;
-    private javax.swing.JLabel jLabel68;
-    private javax.swing.JLabel jLabel69;
     private javax.swing.JLabel jLabel70;
     private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel76;
@@ -1208,14 +1238,8 @@ private void capturardatosproducto (){//recoger datos de los text
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel18;
-    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
@@ -1230,10 +1254,8 @@ private void capturardatosproducto (){//recoger datos de los text
     private javax.swing.JTextField jTextField23;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 }

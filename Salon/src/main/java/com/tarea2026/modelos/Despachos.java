@@ -211,86 +211,13 @@ private String cfinal;
     public void setObservacionact(String observacionact) {
         this.observacionact = observacionact;
     }
-    
-     //Estructura para comprobantes de egreso
-    public Despachos(int numero, String fecha, String codigo, String detalle, int cantidad, String medida, double precio, double total) {
-        this.numero = numero;
-        this.fecha = fecha;
-        this.codigo = codigo;
-        this.detalle = detalle;
-        this.cantidad = cantidad;
-        this.medida = medida;
-        this.precio = precio;
-        this.total = total;
-    }
-    //Estructura para comprobantes de Ingreso Suministros
-    public Despachos(int numero, String fecha, String codigo, String detalle, int cantidad, String medida, double precio, double total, String factura) {
-        this.numero = numero;
-        this.fecha = fecha;
-        this.codigo = codigo;
-        this.detalle = detalle;
-        this.cantidad = cantidad;
-        this.medida = medida;
-        this.precio = precio;
-        this.total = total;
-        this.factura = factura;
-    }
-//Estructura para comprobantes de Ingreso de Activos
-    public Despachos(int numero, int id ,String fecha, String codigo, String detalle, int cantidad, int vutil, String ubicacion, String disponibilidad, double precio, String marca, String modelo, String serie, String color, String estado, String factura, String observacion) {
-        this.numero = numero;
-        this.id= id;
-        this.fecha = fecha;
-        this.codigo = codigo;
-        this.detalle = detalle;
-        this.cantidad = cantidad;
-        this.vutil = vutil;
-        this.ubicacion = ubicacion;
-        this.disponibilidad = disponibilidad;
-        this.precio = precio;
-        this.marca = marca;
-        this.modelo = modelo;
-        this.serie = serie;
-        this.color = color;
-        this.estado = estado;
-        this.factura = factura;
-        this.observacion = observacion;
-    }
-    
-    //Estructura para actas de Entrega y Recepcion
-    public Despachos(int id, String codigo, String detalle, String marca, String modelo, String serie, String color, String estado, String observacion,double precio,int cantidad,String ubicacion,String disponibilidad, String observacionact) {
-        this.id = id;
-        this.codigo = codigo;
-        this.detalle = detalle;
-        this.marca = marca;
-        this.modelo = modelo;
-        this.serie = serie;
-        this.color = color;
-        this.estado = estado;
-        this.observacion = observacion;
-         this.precio = precio;
-        this.cantidad = cantidad;
-        this.ubicacion = ubicacion;
-        this.disponibilidad = disponibilidad;
-        this.observacionact = observacionact;
-    }
-    // Estructura para busqueda de Bienes
-    public Despachos(String fecha,int id, String codigo, String detalle, String cfinal  ) {
-        this.fecha = fecha;
-        this.id = id;
-        this.codigo = codigo;
-        this.detalle = detalle;
-        this.cfinal = cfinal;
-    }
 
-    public Despachos(String fecha, String Scodigo, String codigo, String detalle, String medida, double precio) {
+    public Despachos(String fecha, String Scodigo, String codigo, String detalle, String disponibilidad, double precio) {
         this.fecha = fecha;
         this.Scodigo = Scodigo;
         this.codigo = codigo;
         this.detalle = detalle;
-        this.medida = medida;
+        this.disponibilidad = disponibilidad;
         this.precio = precio;
-    }
-
-
-
+    } 
 }

@@ -7,9 +7,11 @@ import com.tarea2026.modelos.Despachos;
 import com.tarea2026.modelos.Profesional;
 import com.tarea2026.modelos.Servicio;
 import com.tarea2026.modelos.Enlaces;
+import com.tarea2026.repository.CitaRepository;
+import com.tarea2026.repository.CitaRepositoryImpl;
 import javax.swing.table.TableRowSorter;
 import java.util.ArrayList;import java.util.Arrays;
-             import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableModel;
 import java.util.List;              
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JTable;          
@@ -177,20 +179,129 @@ switch(op.toLowerCase()){
   }
     return modelo;
 } 
+/*
+public DefaultTableModel Mostrartablacitas(JTable jt, String fecha) {
+
+    String[] titulos = {
+        "ID CITA",
+        "FECHA",
+        "HORA",
+        "CLIENTE",
+        "PROFESIONAL",
+        "ESTADO"
+    };
+
+    String[] registro = new String[6];
+
+    DefaultTableModel modelo = new DefaultTableModel(null, titulos) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+
+    // Aquí buscamos las citas de la fecha seleccionada
+    List<Citas> citasDelDia = new ArrayList<>();
+
+    for (Citas cita : CITA) {
+
+        if (cita.getFecha().equals(fecha)) {
+            citasDelDia.add(cita);
+        }
+    }
+
+    // Ordenar por hora
+    citasDelDia.sort((c1, c2) ->
+        c1.getHora().compareTo(c2.getHora())
+    );
+
+    // Enviar las citas ordenadas a la tabla
+    for (Citas cita : citasDelDia) {
+
+        registro[0] = cita.getCodigo();
+        registro[1] = cita.getFecha();
+        registro[2] = cita.getHora();
+        registro[3] = cita.getCliente().getNombre();
+        registro[4] = cita.getProfesional().getNombre();
+        registro[5] = cita.getEstado();
+
+        modelo.addRow(registro);
+    }
+
+    TableRowSorter<DefaultTableModel> sorter =
+            new TableRowSorter<>(modelo);
+
+    jt.setAutoCreateRowSorter(true);
+    jt.setRowSorter(sorter);
+
+    return modelo;
+}*/
 
 
+public DefaultTableModel Mostrartablacitas(JTable jt, String fecha) {
 
+    String[] titulos = {
+        "ID CITA",
+        "FECHA",
+        "HORA",
+        "CLIENTE",
+        "PROFESIONAL",
+        "ESTADO"
+    };
 
+    String[] registro = new String[6];
 
+    DefaultTableModel modelo = new DefaultTableModel(null, titulos) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
 
+    // Crear una nueva cola para el día seleccionado
+    CitaRepository repo = new CitaRepositoryImpl();
 
+    // Buscar las citas de la fecha seleccionada
+    List<Citas> citasDelDia = new ArrayList<>();
 
+    for (Citas cita : CITA) {
 
+        if (cita.getFecha().equals(fecha)) {
+            citasDelDia.add(cita);
+        }
+    }
 
+    // Ordenar por hora
+    citasDelDia.sort((c1, c2) ->
+        c1.getHora().compareTo(c2.getHora())
+    );
 
+    // Guardar las citas ordenadas en la cola mediante Repository
+    for (Citas cita : citasDelDia) {
+        repo.guardar(cita);
+    }
 
+    // Mostrar la cola en la tabla
+    for (Citas cita : repo.listar()) {
 
+        registro[0] = cita.getCodigo();
+        registro[1] = cita.getFecha();
+        registro[2] = cita.getHora();
+        registro[3] = cita.getCliente().getNombre();
+        registro[4] = cita.getProfesional().getNombre();
+        registro[5] = cita.getEstado();
 
+        modelo.addRow(registro);
+    }
+
+    TableRowSorter<DefaultTableModel> sorter =
+            new TableRowSorter<>(modelo);
+
+    jt.setAutoCreateRowSorter(true);
+    jt.setRowSorter(sorter);
+
+    return modelo;
+}
 
 public DefaultTableModel MostrartablaClientes(JTable jt) {                                      //Modelo de la tabla empleados
 String[] titulos = {"ID CLIENTE","CEDULA","NOMBRE","TELEFONO","CORREO","TIPO"};
@@ -258,7 +369,70 @@ jt.setRowSorter(sorter);
      return modelo;
     }
     
-    public DefaultComboBoxModel Clientes (){                                     //Modelo empleados para comprobante de egreso 
+  /*  public DefaultComboBoxModel<Cliente> Clientes() {
+
+    DefaultComboBoxModel<Cliente> modelo = new DefaultComboBoxModel<>();
+
+    // Crear una lista de clientes
+    ArrayList<Cliente> lista = new ArrayList<>();
+
+    for (int i = 0; i < CLI.size(); i++) {
+        Cliente oe = CLI.get(i);
+
+        // Cambiar el nombre al formato correcto
+        oe.setNombre(
+            WordUtils.capitalizeFully(oe.getNombre().toLowerCase())
+        );
+
+        lista.add(oe);
+    }
+
+    // Ordenar los objetos Cliente por nombre
+    lista.sort((c1, c2) ->
+        c1.getNombre().compareToIgnoreCase(c2.getNombre())
+    );
+
+    // Agregar los objetos al ComboBox
+    for (Cliente cliente : lista) {
+        modelo.addElement(cliente);
+    }
+
+    return modelo;
+}*/
+    
+    public DefaultComboBoxModel Clientes() {
+    String[] titulo= {"<<SELECCIONE>>"};    
+    DefaultComboBoxModel modelo = new DefaultComboBoxModel(titulo);
+
+    ArrayList<Cliente> lista = new ArrayList<>();
+
+    for (int i = 0; i < CLI.size(); i++) {
+
+        Cliente oe = CLI.get(i);
+
+        oe.setNombre(
+            WordUtils.capitalizeFully(
+                oe.getNombre().toLowerCase()
+            )
+        );
+
+        lista.add(oe);
+    }
+
+    lista.sort((c1, c2) ->
+        c1.getNombre().compareToIgnoreCase(c2.getNombre())
+    );
+
+    for (Cliente cliente : lista) {
+        modelo.addElement(cliente);
+    }
+
+    return modelo;
+}
+    
+    
+    
+   /* public DefaultComboBoxModel Clientes (){                                     //Modelo empleados para comprobante de egreso 
     String[] titulo= {"<<SELECCIONE>>"};
 
     String[] lista;
@@ -276,8 +450,43 @@ jt.setRowSorter(sorter);
                 modelo.addElement(lista1);
             }
         return modelo;
+}*/
+    public DefaultComboBoxModel Profesional() {
+        String[] titulo= {"<<SELECCIONE>>"};
+    DefaultComboBoxModel modelo = new DefaultComboBoxModel(titulo);
+
+    ArrayList<Profesional> lista = new ArrayList<>();
+
+    for (int i = 0; i < PRO.size(); i++) {
+
+        Profesional oe = PRO.get(i);
+
+        // Corregir mayúsculas y minúsculas del nombre
+        oe.setNombre(
+            WordUtils.capitalizeFully(
+                oe.getNombre().toLowerCase()
+            )
+        );
+
+        lista.add(oe);
+    }
+
+    // Ordenar los profesionales por nombre
+    lista.sort((p1, p2) ->
+        p1.getNombre().compareToIgnoreCase(p2.getNombre())
+    );
+
+    // Agregar los objetos Profesional al ComboBox
+    for (Profesional profesional : lista) {
+        modelo.addElement(profesional);
+    }
+
+    return modelo;
 }
-    public DefaultComboBoxModel Profesional (){                                     //Modelo empleados para comprobante de egreso 
+    
+    
+    
+   /* public DefaultComboBoxModel Profesional (){                                     //Modelo empleados para comprobante de egreso 
     String[] titulo= {"<<SELECCIONE>>"};
 
     String[] lista;
@@ -295,7 +504,7 @@ jt.setRowSorter(sorter);
                 modelo.addElement(lista1);
             }
         return modelo;
-}
+}*/
        public DefaultComboBoxModel Servicio (){                                     //Modelo empleados para comprobante de egreso 
     String[] titulo= {"<<SELECCIONE>>"};
 

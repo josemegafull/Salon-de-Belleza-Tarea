@@ -11,10 +11,13 @@
 package com.tarea2026.repository;
 
 import com.tarea2026.modelos.Citas;
+import java.util.List;
 
 public interface CitaRepository {
 
     void guardar(Citas cita);
+    
+    List<Citas> listar();
 
     Citas obtenerSiguiente();
 
