@@ -1,55 +1,93 @@
 # Salon-de-Belleza-Tarea
-# programa para administrar la información básica de clientes y de los profesionales que trabajan en el salón.
 
-# IMPORTANTE!!!!!: C:\repositorio-remoto\Salon-de-Belleza-Tarea\Salon\src en esta ruta hay un archivo que se encarga de la conexión de la base de datos, la aplicación va a requerir que se modifique este archivo, CN.txt, debe abrir el archivo y actualizar la ruta de la base de datos en donde se encuentre descargado la aplicación “ACTUALIZA!!!! vacio vacio vacio “. La base de datos contiene los registros y es muy importante.
-# Sistema de Gestión de Salón de Belleza
-
-## Descripción
+## Sistema de Gestión de Salón de Belleza
 ## 
-## Este repositorio contiene el proyecto desarrollado durante las **semanas 5 y 6**, correspondiente a la implementación de colecciones, operaciones CRUD, interfaz gráfica y manejo de eventos.
+## Aplicación desarrollada en **Java con NetBeans y Java Swing** para administrar clientes, profesionales, servicios y citas de un salón de belleza.
 ## 
-## La aplicación fue desarrollada en **Java utilizando NetBeans y Java Swing**, y utiliza una base de datos local desarrollada en **Microsoft Access**.
+## El proyecto integra los contenidos desarrollados durante las **semanas 5, 6 y 7**, incluyendo colecciones, operaciones CRUD, interfaz gráfica, manejo de eventos, estructura de datos tipo cola, patrón Repository y pruebas unitarias.
+## 
+## ## Descripción
+## 
+## La aplicación permite:
+## 
+## * Registrar y consultar clientes.
+## * Registrar y consultar profesionales.
+## * Registrar y administrar servicios.
+## * Registrar y consultar citas.
+## * Cambiar el estado de las citas.
+## * Consultar las citas según una fecha.
+## * Organizar las citas por hora para establecer el orden de atención.
+## 
+## ### Semana 7
+## 
+## Para organizar la atención de las citas se implementó una **cola FIFO (First In, First Out)** de forma manual, utilizando nodos enlazados.
+## 
+## La cola permite:
+## 
+## * Agregar citas.
+## * Eliminar la siguiente cita.
+## * Consultar la siguiente cita.
+## * Verificar si está vacía.
+## * Contar los elementos.
+## 
+## También se implementó el **patrón Repository** mediante `CitaRepository` y `CitaRepositoryImpl`, separando la administración de las citas de la lógica principal de la aplicación.
+## 
+## Se realizaron pruebas unitarias con **JUnit 4** para comprobar el funcionamiento de la cola.
+## 
+## Resultado de las pruebas:
+## 
+## ```text
+## Tests run: 4
+## Failures: 0
+## Errors: 0
+## Skipped: 0
+## BUILD SUCCESS
+## ```
 ## 
 ## ## Requisitos
 ## 
-## Para ejecutar correctamente la aplicación se requiere:
+## Para ejecutar el proyecto se requiere:
 ## 
-## * Java JDK instalado.
+## * Java JDK.
 ## * Apache NetBeans.
-## * Microsoft Access o los controladores necesarios para trabajar con archivos `.accdb`.
-## * Archivo de base de datos `DATA1.accdb`.
+## * Microsoft Access o los controladores necesarios para archivos `.accdb`.
+## * Archivo `DATA1.accdb`.
 ## 
 ## ## Instalación y configuración
 ## 
 ## ### 1. Descargar el repositorio
 ## 
-## Descargar o clonar este repositorio en el equipo donde se ejecutará la aplicación.
-## 
 ## ```bash
 ## git clone https://github.com/josemegafull/Salon-de-Belleza-Tarea.git
 ## ```
 ## 
-## También se puede descargar el repositorio directamente desde GitHub utilizando la opción **Code → Download ZIP**.
+## También se puede descargar mediante **Code → Download ZIP** desde GitHub.
 ## 
-## ### 2. Ubicar la base de datos
+## ### 2. Configurar la base de datos
 ## 
-## Dentro del proyecto se encuentra el archivo:
+## Dentro del proyecto se encuentra:
 ## 
 ## ```text
 ## DATA1.accdb
 ## ```
 ## 
-## Este archivo corresponde a la base de datos utilizada por la aplicación.
+## La aplicación necesita este archivo para acceder a los registros.
 ## 
-## ### 3. Actualizar la ruta de la base de datos
+## **IMPORTANTE:** dentro de:
 ## 
-## Es necesario verificar y actualizar la **ruta del archivo `DATA1.accdb`** de acuerdo con la ubicación en la que se haya descargado el proyecto en el nuevo equipo.
+## ```text
+## src
+## ```
 ## 
-## > **Importante:** Si la ruta de la base de datos no coincide con la ubicación real del archivo `DATA1.accdb`, la aplicación no podrá establecer la conexión y se producirá un error al intentar acceder a los registros.
+## se encuentra el archivo:
 ## 
-## Para realizar esta configuración se debe seguir la indicación correspondiente a la ruta de conexión implementada en el proyecto.
+## ```text
+## CN.txt
+## ```
 ## 
-## La ruta debe apuntar directamente al archivo:
+## Este archivo contiene la ruta utilizada para la conexión con la base de datos.
+## 
+## Al descargar el proyecto en otro equipo, se debe abrir `CN.txt` y actualizar la ruta para que apunte a la ubicación real de:
 ## 
 ## ```text
 ## DATA1.accdb
@@ -61,36 +99,33 @@
 ## C:\ruta\del\proyecto\Salon\DATA1.accdb
 ## ```
 ## 
-## La ruta mostrada anteriormente es solamente un ejemplo. **Debe reemplazarse por la ruta real donde se encuentre el archivo en el equipo.**
+## La ruta anterior es solamente un ejemplo. Debe utilizarse la ruta correspondiente al equipo donde se ejecutará el proyecto.
 ## 
-## ### 4. Abrir el proyecto en NetBeans
-## 
-## Una vez configurada la ruta de la base de datos:
+## ### 3. Abrir y ejecutar
 ## 
 ## 1. Abrir **Apache NetBeans**.
 ## 2. Seleccionar **File → Open Project**.
-## 3. Ubicar la carpeta descargada del repositorio.
-## 4. Seleccionar el proyecto **Salon**.
-## 5. Esperar a que NetBeans cargue las dependencias y la configuración del proyecto.
+## 3. Abrir el proyecto **Salon**.
+## 4. Esperar a que Maven cargue las dependencias.
+## 5. Ejecutar mediante **Run Project**.
 ## 
-## ### 5. Ejecutar la aplicación
+## ## Pruebas unitarias
 ## 
-## Después de cargar correctamente el proyecto:
+## Las pruebas se encuentran en:
 ## 
-## 1. Localizar el proyecto **Salon** en NetBeans.
-## 2. Ejecutar el proyecto utilizando **Run Project**.
-## 3. La aplicación iniciará mostrando la ventana principal del sistema.
-## 4. Desde el menú principal se podrá acceder a las diferentes opciones implementadas, como **Registro**, **Clientes, Profesionales, Servicios y Citas**.
+## ```text
+## Test Packages
+## └── com.tarea2026.repository
+##     └── ColaCitasTest.java
+## ```
 ## 
-## ## Consideración importante sobre la base de datos
+## Para ejecutarlas desde NetBeans:
 ## 
-## La aplicación depende directamente del archivo `DATA1.accdb`. Por esta razón, **no se debe eliminar, cambiar de ubicación ni modificar el nombre del archivo después de configurar la ruta**, a menos que posteriormente se actualice nuevamente la configuración de conexión.
+## **Clic derecho en `ColaCitasTest.java` → Test File**
 ## 
-## Si el proyecto se ejecuta en otro equipo, se debe revisar la ruta de la base de datos antes de iniciar la aplicación.
+## Las pruebas verifican las operaciones principales de la cola y deben mostrar `BUILD SUCCESS` cuando se ejecutan correctamente.
 ## 
 ## ## Estructura general
-## 
-## El proyecto contiene, entre otros, los siguientes elementos:
 ## 
 ## ```text
 ## Salon/
@@ -100,9 +135,5 @@
 ## └── README.md
 ## ```
 ## 
-## La aplicación utiliza la base de datos `DATA1.accdb` para almacenar y consultar la información utilizada por el sistema.
-## 
-## ## Ejecución
-## 
-## Una vez completados los pasos anteriores, el proyecto estará listo para ejecutarse desde **NetBeans** y utilizar las funcionalidades implementadas durante las semanas 5 y 6.
+## El proyecto contiene el código fuente de la aplicación, la configuración Maven, la base de datos y las pruebas unitarias.
 ## 
